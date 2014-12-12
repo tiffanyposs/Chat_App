@@ -1,0 +1,23 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tiffanyposs/Chat_App.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiffanyposs/Chat_App/issues"
+  },
+  "homepage": "https://github.com/tiffanyposs/Chat_App",
+  "dependencies": {
+    "ws": "^0.6.3"
+  }
+}
