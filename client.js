@@ -27,13 +27,9 @@ client.addEventListener("open", function() {
   //listens for incoming messages
   client.addEventListener("message", function(message) {
     //recieves message from server and parses the data
-    console.log(newMessage);
+    //console.log(newMessage);
+    createLi(message);
 
-    var newMessage = JSON.parse(message.data);
-    var ul = document.querySelector("ul");
-    var li = document.createElement("li");
-    li.innerText = newMessage.name + " " + newMessage.msg;
-    ul.insertBefore(li, ul.firstChild);
 
   });
 
@@ -43,6 +39,13 @@ client.addEventListener("open", function() {
 ///////
 //FUNCTIONS
 ///////
+var createLi = function(message){
+  var newMessage = JSON.parse(message.data);
+  var ul = document.querySelector("ul");
+  var li = document.createElement("li");
+  li.innerText = newMessage.name + " " + newMessage.msg;
+  ul.insertBefore(li, ul.firstChild);
+}
 
 var sendMessage = function(){
   var input = document.getElementById("input");
