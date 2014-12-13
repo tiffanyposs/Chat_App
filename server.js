@@ -7,6 +7,7 @@ var storedClients = [];
 var counter = 1;
 
 
+
 console.log("listening on port 3000 (press CTRL+C to quit)");
 
 
@@ -33,13 +34,17 @@ server.on("connection", function(connection){
   ///////
   //listen for incoming messages
   connection.on("message", function(message){
-    console.log(message);
-    //add message to stored messages array
-    storedMessages.push(message);
-    storedClients.forEach(function(each){
-      each.send(message);
-    })
-    //connection.send(message);
+    //var words = ["kitten", "fun", "stupid"]
+
+
+    bannedWords(message, connection);
+    sendMessage(message);
+
+
+
+
+
+
   });//end message
 
 
@@ -70,3 +75,53 @@ var removeClient = function(connection){
     }
   }
 }
+
+
+
+var bannedWords = function(message, connection){
+  var badWords = ["kitten", "apple", "burrito"];
+  var hashedword = JSON.parse(message);
+  var string = hashedword.msg;
+
+  // could attment to make it remove the spaces
+  var string_array = string.split(" ");
+  for(x = 0; x < string_array.length; x++){
+    badWords.forEach(function(each){
+      if(each === string_array[x]){
+        removeClient(connection);
+        connection.close();
+      }
+    })
+  }
+}
+
+
+
+var sendMessage = function(message){
+  console.log(message);
+  storedMessages.push(message);
+  storedClients.forEach(function(each){
+    each.send(message);
+  })
+}
+
+
+
+
+
+
+  // var bannedWords = function(message, connection){
+  //   var badWords = ["kitten", "apple", "burrito"];
+  //   var hashedword = JSON.parse(message);
+  //   var string = hashedword.msg;
+  //
+  //   var string_array = string.split(" ");
+  //   for(x = 0; x < string_array.length; x++){
+  //     badWords.forEach(function(each){
+  //       if(each === string_array[x]){
+  //         removeClient(connection);
+  //         connection.close();
+  //       }
+  //     })
+  //   }
+  // }
