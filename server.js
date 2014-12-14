@@ -14,7 +14,6 @@ server.on("connection", function(connection){
   //this logs a usernumber to each server
   connection.usernumber = "user_" + counter;
   counter++;
-
   storage(connection);
 
 
@@ -37,9 +36,9 @@ server.on("connection", function(connection){
 
   });
 
-});
+});//end connection
 /////////
-//end connection
+//END .ON FUNCTION
 /////////
 
 ////////
@@ -49,6 +48,9 @@ server.on("connection", function(connection){
 //this is for stored messages and clients
 var storedMessages = [];
 var storedClients = [];
+
+//pushes new clients, and loads stored messages
+//when they log on
 var storage = function(connection){
   storedClients.push(connection);
   storedMessages.forEach(function(each){
@@ -113,7 +115,7 @@ var replaceWords = function(message){
   return message;
 }
 
-//emoji list
+//emoji list, used with multipleWords
 var emoji = {
   yell: "Ahhhhh",
   tableflip: "(╯°□°）╯︵ ┻━┻",
@@ -121,7 +123,7 @@ var emoji = {
   fish: "¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>",
   house: "__̴ı̴̴̡̡̡ ̡͌l̡̡̡ ̡͌l̡*̡̡ ̴̡ı̴̴̡ ̡̡͡|̲̲̲͡͡͡ ̲▫̲͡ ̲̲̲͡͡π̲̲͡͡ ̲̲͡▫̲̲͡͡ ̲|̡̡̡ ̡ ̴̡ı̴̡̡ ̡͌l̡̡̡̡.___",
   boombox: "♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪",
-  sleep: "(-.-)Zzz...",
+  sleep: "(-.-)Zzz..."
 }
 
 // this will replace a word from a message with something else
@@ -151,13 +153,12 @@ var multipleWords = function(message){
     else if(array[i] === "(sleep)"){
       array.splice(i, 1, emoji.sleep)
     }
-
-  }
+  }///end for loop
     string = array.join(" ");
     hashedword.msg = string;
     message = JSON.stringify(hashedword);
     return message;
-}
+}//end multipleWords
 
 // var multipleWords = function(message){
 //   var hashedword = JSON.parse(message);
