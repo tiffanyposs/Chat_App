@@ -102,60 +102,73 @@ var bannedWords = function(message, connection){
     )}
   }
 
-
-//!!!!!!!!!!!
-//this you may not need after builiding multipleWords function
-//this does replaces single words words with new ones
-var replaceWords = function(message){
-  var hashedword = JSON.parse(message);
-  if(hashedword.msg === "(yell)"){
-    hashedword.msg = "AHHHH";
-    message = JSON.stringify(hashedword);
+  //emoji list, used with multipleWords
+  var emoji = {
+    yell: "Ahhhhh",
+    tableflip: "(╯°□°）╯︵ ┻━┻",
+    butterfly: "Ƹ̵̡Ӝ̵̨̄Ʒ",
+    fish: "¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>",
+    house: "__̴ı̴̴̡̡̡ ̡͌l̡̡̡ ̡͌l̡*̡̡ ̴̡ı̴̴̡ ̡̡͡|̲̲̲͡͡͡ ̲▫̲͡ ̲̲̲͡͡π̲̲͡͡ ̲̲͡▫̲̲͡͡ ̲|̡̡̡ ̡ ̴̡ı̴̡̡ ̡͌l̡̡̡̡.___",
+    boombox: "♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪",
+    sleep: "(-.-)Zzz..."
   }
-  return message;
-}
 
-//emoji list, used with multipleWords
-var emoji = {
-  yell: "Ahhhhh",
-  tableflip: "(╯°□°）╯︵ ┻━┻",
-  butterfly: "Ƹ̵̡Ӝ̵̨̄Ʒ",
-  fish: "¸.·´¯`·.´¯`·.¸¸.·´¯`·.¸><(((º>",
-  house: "__̴ı̴̴̡̡̡ ̡͌l̡̡̡ ̡͌l̡*̡̡ ̴̡ı̴̴̡ ̡̡͡|̲̲̲͡͡͡ ̲▫̲͡ ̲̲̲͡͡π̲̲͡͡ ̲̲͡▫̲̲͡͡ ̲|̡̡̡ ̡ ̴̡ı̴̡̡ ̡͌l̡̡̡̡.___",
-  boombox: "♫♪.ılılıll|̲̅̅●̲̅̅|̲̅̅=̲̅̅|̲̅̅●̲̅̅|llılılı.♫♪",
-  sleep: "(-.-)Zzz..."
-}
-
-// this will replace a word from a message with something else
-var multipleWords = function(message){
-  var hashedword = JSON.parse(message);
-  var string = hashedword.msg;
-  var array = string.split(" ");
-  for(var i = 0; i < array.length; i++){
-    if(array[i] === "(yell)"){
-      array.splice(i, 1, emoji.yell)
-    }
-    else if(array[i] === "(tableflip)"){
-      array.splice(i, 1, emoji.tableflip)
-    }
-    else if(array[i] === "(butterfly)"){
-      array.splice(i, 1, emoji.butterfly)
-    }
-    else if(array[i] === "(fish)"){
-      array.splice(i, 1, emoji.fish)
-    }
-    else if(array[i] === "(house)"){
-      array.splice(i, 1, emoji.house)
-    }
-    else if(array[i] === "(boombox)"){
-      array.splice(i, 1, emoji.boombox)
-    }
-    else if(array[i] === "(sleep)"){
-      array.splice(i, 1, emoji.sleep)
-    }
-  }///end for loop
+  // this will replace a word from a message with something else
+  var multipleWords = function(message){
+    var hashedword = JSON.parse(message);
+    var string = hashedword.msg;
+    var array = string.split(" ");
+    for(var i = 0; i < array.length; i++){
+      if(array[i] === "(yell)"){
+        array.splice(i, 1, emoji.yell)
+      }
+      else if(array[i] === "(tableflip)"){
+        array.splice(i, 1, emoji.tableflip)
+      }
+      else if(array[i] === "(butterfly)"){
+        array.splice(i, 1, emoji.butterfly)
+      }
+      else if(array[i] === "(fish)"){
+        array.splice(i, 1, emoji.fish)
+      }
+      else if(array[i] === "(house)"){
+        array.splice(i, 1, emoji.house)
+      }
+      else if(array[i] === "(boombox)"){
+        array.splice(i, 1, emoji.boombox)
+      }
+      else if(array[i] === "(sleep)"){
+        array.splice(i, 1, emoji.sleep)
+      }
+    }///end for loop
     string = array.join(" ");
     hashedword.msg = string;
     message = JSON.stringify(hashedword);
     return message;
-}//end multipleWords
+  }//end multipleWords
+
+//STARTED for replacing images
+//   var imageSearch = function(message, connection){
+//     var parsed_msg = JSON.parse(message);
+//     var string = parsed_msg.msg;
+//     var string_array = string.split(" ");
+//       string_array.forEach(function(each){
+//         var end_digits = each[each.length - 2] + each[each.length - 1] + each[each.length];
+//         if(end_digits === jpg){
+//           var a = document.createElement("a");
+//         }
+//       })
+//     }
+//
+//
+// //!!!!!!!!!!!
+// //this you may not need after builiding multipleWords function
+// //this does replaces single words words with new ones
+// var replaceWords = function(message){
+//   var hashedword = JSON.parse(message);
+//   if(hashedword.msg === "(yell)"){
+//     hashedword.msg = "AHHHH";
+//     message = JSON.stringify(hashedword);
+//   }
+//   return message;
+// }
