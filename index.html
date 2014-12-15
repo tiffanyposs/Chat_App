@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href='http://fonts.googleapis.com/css?family=Dosis:500' rel='stylesheet' type='text/css'>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css">
   <meta charset="UTF-8">
-  <title>Serialization</title>
+  <title>hello.chat</title>
 </head>
 <body>
-  <input type = "text" id="username">
-  <input type="text" id="input">
-  <button id ="button">Send</button>
-  <ul>
-  </ul>
+
+
+  <div id= "header">
+    <img src = "images/heading.jpg" id= "image_head">
+    <!-- <h1>hello.chat</h1> -->
+  </div>
+
+
+  <div id= "user_div">
+    <h2>Create a username!</h2>
+  <input type = "text" id="username" placeholder= "username!">
+  </div>
+
+
+  <div id= "message_div">
+    <ul>
+    </ul>
+  </div>
+
+
+<div id = "send_div">
+  <input type="text" id="input" placeholder= "Type a Message">
+  <button id ="button"></button>
+</div>
 
   <script src="client.js"></script>
 </body>

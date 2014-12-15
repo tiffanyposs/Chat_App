@@ -159,18 +159,3 @@ var multipleWords = function(message){
     message = JSON.stringify(hashedword);
     return message;
 }//end multipleWords
-
-// var multipleWords = function(message){
-//   var hashedword = JSON.parse(message);
-//   var string = hashedword.msg;
-//   var array = string.split(" ");
-//   for(var i = 0; i < array.length; i++){
-//     if(array[i] === "(yell)"){
-//       array.splice(i, 1, "Ahhhh")
-//     }
-//   }
-//   string = array.join(" ");
-//   hashedword.msg = string;
-//   message = JSON.stringify(hashedword);
-//   return message;
-// }

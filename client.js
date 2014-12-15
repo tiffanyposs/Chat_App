@@ -16,13 +16,8 @@ client.addEventListener("open", function() {
 
   //BUTTON EVENT LISTENER
   button.addEventListener("click", function(){
-    //  removeInput();
-    //var messageObject = {name: "Anonymous", msg: ""};
     sendMessage();
   })
-
-
-
 
   // ON PRESSING ENTER
   input.addEventListener("keypress", function(){
@@ -52,16 +47,17 @@ var createLi = function(message){
   ul.insertBefore(li, ul.firstChild);
 }
 
-
-
 var sendMessage = function(){
   var input = document.getElementById("input");
   var userInput = document.getElementById("username");
+  var user_div = document.getElementById("user_div")
   var messageObject = {name: "Anonymous:", msg: input.value};
   //take messageObject, stringify and send to server
   if (userInput.value.trim() != "") {
     messageObject.name = userInput.value + ":";
     userInput.style.visibility="hidden";
+    user_div.style.visibility="hidden";
+
   }
   //will only send something if the input actually has text
   if (input.value.trim() != "" && userInput.value.trim() != "") {
