@@ -1,8 +1,8 @@
 //Client File
 //this is for local host
-//var client = new WebSocket("ws://localhost:3000");
+var client = new WebSocket("ws://localhost:3000");
 //this is for Digital Ocean
-var client = new WebSocket("ws://tiffany.princesspeach.nyc:3000");
+//var client = new WebSocket("ws://tiffany.princesspeach.nyc:3000");
 
 client.addEventListener("open", function() {
   console.log('connected');
@@ -28,6 +28,8 @@ client.addEventListener("open", function() {
 
   //listens for incoming messages
   client.addEventListener("message", function(message) {
+    imageRender(message);
+    renderLink(message);
     createLi(message);
   });
 
@@ -39,6 +41,55 @@ client.addEventListener("open", function() {
 ///////
 //FUNCTIONS
 ///////
+
+//NEED TO CREATE A FUNCTION THAT FILTERS THOUGH ALL THE
+//WORDS, MIGHT BE ONE FUNCTION THAT CALLS THE OTHERS
+//I'VE CREATED
+
+
+
+//NEEDS TO REMOVE THE IMAGE LINK NAME FROM THE MESSAGE ARRAY
+//NEEDS TO RENDER PNG AND BITMAT
+var imageRender = function(message){
+  var newMessage = JSON.parse(message.data);
+  var ul = document.querySelector("ul");
+  var li = document.createElement("li");
+  var msg_array = newMessage.msg.split(" ");
+  msg_array.forEach(function(each){
+    var end_digits = each.charAt(each.length-3) + each.charAt(each.length-2) + each.charAt(each.length- 1);
+    if(end_digits === "jpg"){
+      var img = document.createElement("img");
+      img.setAttribute("src", each);
+      img.style.width = "200px";
+      console.log(img);
+      li.appendChild(img);
+      ul.insertBefore(li, ul.firstChild);
+    }
+  })
+}
+
+
+//NEEDS TO REMOVE THE IMAGE LINK NAME FORM THE MESSAGE ARRAY
+// needs to render all the options for images ex www etc
+var renderLink = function(message){
+  var newMessage = JSON.parse(message.data);
+  var ul = document.querySelector("ul");
+  var li = document.createElement("li");
+  var msg_array = newMessage.msg.split(" ");
+  msg_array.forEach(function(each){
+    var first_digits = each.charAt(0) + each.charAt(1) + each.charAt(2) + each.charAt(3);
+    if(first_digits === "http"){
+      var link = document.createElement("a");
+      link.href = each;
+      link.innerHTML = each;
+      li.innerText = newMessage.name;
+      li.appendChild(link);
+      ul.insertBefore(li, ul.firstChild);
+    }
+  });
+}
+
+//RENDERS A REGULAR ARRAY
 var createLi = function(message){
   var newMessage = JSON.parse(message.data);
   var ul = document.querySelector("ul");
@@ -46,6 +97,9 @@ var createLi = function(message){
   li.innerText = newMessage.name + " " + newMessage.msg;
   ul.insertBefore(li, ul.firstChild);
 }
+
+
+
 
 var sendMessage = function(){
   var input = document.getElementById("input");
@@ -57,7 +111,6 @@ var sendMessage = function(){
     messageObject.name = userInput.value + ":";
     userInput.style.visibility="hidden";
     user_div.style.visibility="hidden";
-
   }
   //will only send something if the input actually has text
   if (input.value.trim() != "" && userInput.value.trim() != "") {
@@ -66,3 +119,12 @@ var sendMessage = function(){
   //resets input box
   input.value = "";
 }
+
+
+// var createLi = function(message){
+//   var newMessage = JSON.parse(message.data);
+//   var ul = document.querySelector("ul");
+//   var li = document.createElement("li");
+//   li.innerText = newMessage.name + " " + newMessage.msg;
+//   ul.insertBefore(li, ul.firstChild);
+// }

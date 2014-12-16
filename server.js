@@ -11,9 +11,10 @@ console.log("listening on port 3000 (press CTRL+C to quit)");
 ///////
 server.on("connection", function(connection){
   console.log("Client Connected");
-  //this logs a usernumber to each server
   connection.usernumber = "user_" + counter;
   counter++;
+
+
   storage(connection);
 
 
@@ -147,18 +148,25 @@ var bannedWords = function(message, connection){
     return message;
   }//end multipleWords
 
-//STARTED for replacing images
-//   var imageSearch = function(message, connection){
-//     var parsed_msg = JSON.parse(message);
-//     var string = parsed_msg.msg;
-//     var string_array = string.split(" ");
-//       string_array.forEach(function(each){
-//         var end_digits = each[each.length - 2] + each[each.length - 1] + each[each.length];
-//         if(end_digits === jpg){
-//           var a = document.createElement("a");
-//         }
-//       })
-//     }
+
+
+  // var imageSearch = function(message){
+  //   var newMessage = JSON.parse(message.data);
+  //   var string = newMessage.msg;
+  //   var array = string.split(" ");
+  //   array.forEach(each){
+  //     var length = each.length;
+  //     var end_digits = each.charAt(length-2) + each.charAt(length-1) + each.charAt(length);
+  //     console.log(end_digits);
+  //     if(end_digits === "jpg"){
+  //       var img = document.createElement("img");
+  //       img.setAttribute("src", each);
+  //       img.style.width = "120px";
+  //       each = img;
+  //     }
+  //   }
+  //   }
+  
 //
 //
 // //!!!!!!!!!!!
