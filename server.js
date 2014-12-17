@@ -147,36 +147,3 @@ var bannedWords = function(message, connection){
     message = JSON.stringify(hashedword);
     return message;
   }//end multipleWords
-
-
-
-  // var imageSearch = function(message){
-  //   var newMessage = JSON.parse(message.data);
-  //   var string = newMessage.msg;
-  //   var array = string.split(" ");
-  //   array.forEach(each){
-  //     var length = each.length;
-  //     var end_digits = each.charAt(length-2) + each.charAt(length-1) + each.charAt(length);
-  //     console.log(end_digits);
-  //     if(end_digits === "jpg"){
-  //       var img = document.createElement("img");
-  //       img.setAttribute("src", each);
-  //       img.style.width = "120px";
-  //       each = img;
-  //     }
-  //   }
-  //   }
-  
-//
-//
-// //!!!!!!!!!!!
-// //this you may not need after builiding multipleWords function
-// //this does replaces single words words with new ones
-// var replaceWords = function(message){
-//   var hashedword = JSON.parse(message);
-//   if(hashedword.msg === "(yell)"){
-//     hashedword.msg = "AHHHH";
-//     message = JSON.stringify(hashedword);
-//   }
-//   return message;
-// }

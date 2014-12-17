@@ -27,15 +27,12 @@ client.addEventListener("open", function() {
   });
 
   //listens for incoming messages
-  client.addEventListener("message", function(message) {
-    imageRender(message);
-    renderLink(message);
-    createLi(message);
+  client.addEventListener("message", function(message){
+    messageLog(message);
   });
 
 });//end open connection
 ///////////
-
 
 
 ///////
@@ -47,56 +44,48 @@ client.addEventListener("open", function() {
 //I'VE CREATED
 
 
-
-//NEEDS TO REMOVE THE IMAGE LINK NAME FROM THE MESSAGE ARRAY
-//NEEDS TO RENDER PNG AND BITMAT
-var imageRender = function(message){
+//this goes through all incoming messages and renders them depending
+//on if there is an image, plain text, or link
+var messageLog = function(message){
   var newMessage = JSON.parse(message.data);
+  var msg_array = newMessage.msg.split(" ");
+  var array = [];
   var ul = document.querySelector("ul");
   var li = document.createElement("li");
-  var msg_array = newMessage.msg.split(" ");
+  //images
   msg_array.forEach(function(each){
     var end_digits = each.charAt(each.length-3) + each.charAt(each.length-2) + each.charAt(each.length- 1);
-    if(end_digits === "jpg"){
-      var img = document.createElement("img");
-      img.setAttribute("src", each);
-      img.style.width = "200px";
-      console.log(img);
-      li.appendChild(img);
-      ul.insertBefore(li, ul.firstChild);
-    }
-  })
-}
-
-
-//NEEDS TO REMOVE THE IMAGE LINK NAME FORM THE MESSAGE ARRAY
-// needs to render all the options for images ex www etc
-var renderLink = function(message){
-  var newMessage = JSON.parse(message.data);
-  var ul = document.querySelector("ul");
-  var li = document.createElement("li");
-  var msg_array = newMessage.msg.split(" ");
-  msg_array.forEach(function(each){
     var first_digits = each.charAt(0) + each.charAt(1) + each.charAt(2) + each.charAt(3);
-    if(first_digits === "http"){
+    var ul = document.querySelector("ul");
+    var li = document.createElement("li");
+    //this renders images and gifs
+    if(end_digits === "jpg" || end_digits === "png" || end_digits === "gif"){
+      var img = document.createElement("img");
+        img.setAttribute("src", each);
+        img.style.width = "200px";
+        li.innerHTML = newMessage.name + "    ";
+        li.appendChild(img);
+        ul.insertBefore(li, ul.firstChild);
+      }
+    //this renders links
+    else if(first_digits === "http" || first_digits === "www."){
       var link = document.createElement("a");
-      link.href = each;
-      link.innerHTML = each;
-      li.innerText = newMessage.name;
-      li.appendChild(link);
-      ul.insertBefore(li, ul.firstChild);
+        link.href = each;
+        link.innerHTML = each;
+        li.innerHTML = newMessage.name + "    ";
+        li.appendChild(link);
+        ul.insertBefore(li, ul.firstChild);
+      }
+    else{
+      array.push(each);
     }
   });
-}
-
-//RENDERS A REGULAR ARRAY
-var createLi = function(message){
-  var newMessage = JSON.parse(message.data);
-  var ul = document.querySelector("ul");
-  var li = document.createElement("li");
-  li.innerText = newMessage.name + " " + newMessage.msg;
-  ul.insertBefore(li, ul.firstChild);
-}
+    //this prints all other text
+    if(array.length > 0){
+      li.innerText = newMessage.name + "    " + array.join(" ");
+      ul.insertBefore(li, ul.firstChild);
+    }
+  }
 
 
 
@@ -104,13 +93,15 @@ var createLi = function(message){
 var sendMessage = function(){
   var input = document.getElementById("input");
   var userInput = document.getElementById("username");
-  var user_div = document.getElementById("user_div")
+  var user_div = document.getElementById("user_div");
+  var message_div = document.getElementById("message_div");
   var messageObject = {name: "Anonymous:", msg: input.value};
   //take messageObject, stringify and send to server
   if (userInput.value.trim() != "") {
     messageObject.name = userInput.value + ":";
     userInput.style.visibility="hidden";
     user_div.style.visibility="hidden";
+    message_div.style.visibility="visible";
   }
   //will only send something if the input actually has text
   if (input.value.trim() != "" && userInput.value.trim() != "") {
@@ -121,10 +112,51 @@ var sendMessage = function(){
 }
 
 
+
+// var imageRender = function(message){
+//   var newMessage = JSON.parse(message.data);
+//   var ul = document.querySelector("ul");
+//   var li = document.createElement("li");
+//   var msg_array = newMessage.msg.split(" ");
+//   msg_array.forEach(function(each){
+//     var end_digits = each.charAt(each.length-3) + each.charAt(each.length-2) + each.charAt(each.length- 1);
+//     if(end_digits === "jpg" || end_digits === "png" || end_digits === "gif"){
+//       var img = document.createElement("img");
+//         img.setAttribute("src", each);
+//         img.style.width = "200px";
+//         li.appendChild(img);
+//         ul.insertBefore(li, ul.firstChild);
+
+//       }
+//     })
+//   }
+
+
+// //NEEDS TO REMOVE THE IMAGE LINK NAME FORM THE MESSAGE ARRAY
+// // needs to render all the options for images ex www etc
+// var hyperLink = function(message){
+//   var newMessage = JSON.parse(message.data);
+//   var ul = document.querySelector("ul");
+//   var li = document.createElement("li");
+//   var msg_array = newMessage.msg.split(" ");
+//     msg_array.forEach(function(each){
+//     var first_digits = each.charAt(0) + each.charAt(1) + each.charAt(2) + each.charAt(3);
+//       if(first_digits === "http" || first_digits === "www."){
+//         var link = document.createElement("a");
+//         link.href = each;
+//         link.innerHTML = each;
+//         li.innerText = newMessage.name;
+//         li.appendChild(link);
+//         ul.insertBefore(li, ul.firstChild);
+//       }
+//     });
+//   }
+
+// //RENDERS A REGULAR ARRAY
 // var createLi = function(message){
 //   var newMessage = JSON.parse(message.data);
 //   var ul = document.querySelector("ul");
 //   var li = document.createElement("li");
-//   li.innerText = newMessage.name + " " + newMessage.msg;
-//   ul.insertBefore(li, ul.firstChild);
+//     li.innerText = newMessage.name + " " + newMessage.msg;
+//     ul.insertBefore(li, ul.firstChild);
 // }
